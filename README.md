@@ -13,3 +13,5 @@ the article.
 The program will seek out new articles each time the user interacts with the program. We will not be persisting articles or ratings. I need to figure out
 the best way to develop a ranking system for difficulty. For the first attempt, I will try to find the number of distinct words in an article and the average
 length of the word in the article. I hope to improve this algorithm as I delve deeper into this project.
+
+## Test
