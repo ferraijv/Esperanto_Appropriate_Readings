@@ -4,34 +4,44 @@ Created on Wed Aug 21 13:45:43 2019
 
 @author: Jacob
 """
-os.chdir('C:/Users/Jacob/esperanto_project/data')
+
 
 import wikipedia
 import pandas as pd
 import re
+import sys
+sys.path.append("C:/learning/Esperanto_Appropriate_Readings/src")
 import functions
 import os
 import csv
 
+os.chdir('C:/learning/Esperanto_Appropriate_Readings')
+
+wikipedia.set_lang('En')
+
+article_titles_to_iterate = functions.create_search_list(500)
+
+corpus = functions.create_corpus(article_titles_to_iterate)
+
+texts = pd.DataFrame.from_dict(corpus,
+                           orient='index',
+                           columns=['full_text'])
 
 
-wikipedia.set_lang('Eo')
+cleaned_corpus = functions.clean_corpus(texts)
 
-article_titles_to_iterate = create_search_list(10000)
+word_frequency = functions.count_words(cleaned_corpus)
 
-with open('test.csv', mode='w', newline='') as test:
-    wr = csv.writer(test, quoting = csv.QUOTE_ALL)
-    wr.writerow(article_titles_to_iterate)
-    
+df = pd.DataFrame.from_dict(
+    word_frequency,
+    orient = 'index',
+    columns = ['count']
+    ).sort_values('count')
 
-corpus = create_corpus(article_titles_to_iterate)
-
-cleaned_corpus = clean_corpus(corpus)
-
-word_frequency = count_words(cleaned_corpus)
-
-df = pd.DataFrame.from_dict(word_frequency, orient = 'index', columns = ['count'])
-
+# We don't want any words that are wone letter
 df = df[df.index.str.len() > 1]
 
-df.sort_values(by = ['count'])
+
+
+
+
