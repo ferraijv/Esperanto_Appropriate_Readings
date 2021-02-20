@@ -104,6 +104,7 @@ class texts:
         wikipedia.set_lang(language)
         self.difficulty = {}
         self.ranking = 0.0
+        self.times_seen = {}
     
     def fetch_articles(self, n):
         """ Fetch Articles
@@ -170,26 +171,43 @@ class texts:
         
         """
         if self.ranking == 0: # if no rankings complete
-            a = list(self.articles.keys())[random.randint(0,len(self.articles.keys()))]
+            a = list(self.articles.keys())[random.randint(0,len(self.articles.keys())-1)]
             print(self.articles[a])
+        
+        
+        return(self.difficulty[a])
     
-    def get_ranking():
+    def get_ranking(self, diff):
+        """ Get Ranking
+        
+        Adjusts the ranking based on user's response
+        
+        """
+        
         evaluation = input("""Rank the previous article
               1) Too hard
               2) Too easy
               3) Just right
                """)
         
+        difference = self.ranking - diff
+        print(difference)
+        adjust = abs(difference/2)
+        
+        if int(evaluation) == 1:
+            self.ranking = self.ranking - adjust
+        elif int(evaluation) == 2:
+            self.ranking = self.ranking + adjust
             
             
-def loadTexts(self):
+def loadTexts():
     with open('saved/readings.pickle', 'rb') as handle:
        return(pickle.load(handle))
 
 do_load = input("Load existing file? ")
 
-if do_load == 1:
-    texts = loadTexts()
+if int(do_load) == 1:
+    text = loadTexts()
 else:
     language = input("What language would you like to learn? ")
     text = texts(language)
@@ -212,7 +230,10 @@ while int(option) >= 0:
     elif int(option) == 2:
         text.saveTexts()
     elif int(option) == 3:
-        text.display()
+        diff = text.display()
+        text.get_ranking(diff)
+        print(f"Your new ranking is {text.ranking}")
+        
         
         
                    
