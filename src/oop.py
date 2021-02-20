@@ -8,6 +8,7 @@ import wikipedia
 import pandas as pd
 import re
 import numpy as np
+import random
 
 def create_search_list(n):
     """ Create Search List
@@ -102,6 +103,7 @@ class texts:
         self.word_frequency = pd.DataFrame()
         wikipedia.set_lang(language)
         self.difficulty = {}
+        self.ranking = 0.0
     
     def fetch_articles(self, n):
         """ Fetch Articles
@@ -151,18 +153,55 @@ class texts:
             print("Difficulty Score for "+k+": "+str(1/(wf_sum/n_words)))
         
         
-    def saveTexts():
-        pickle.save()
+    def saveTexts(self):
+        """ Save Texts
         
+        Saves all of the articles and difficulty ratings to disc to be loaded
+        later
+        
+        """
+        with open('saved/readings.pickle', 'wb') as handle:
+            pickle.dump(self, handle, protocol=pickle.HIGHEST_PROTOCOL)
+            
+    def display(self):
+        """ Display
+        
+        Displays an article for the user to read
+        
+        """
+        if self.ranking == 0: # if no rankings complete
+            a = list(self.articles.keys())[random.randint(0,len(self.articles.keys()))]
+            print(self.articles[a])
+    
+    def get_ranking():
+        evaluation = input("""Rank the previous article
+              1) Too hard
+              2) Too easy
+              3) Just right
+               """)
+        
+            
+            
+def loadTexts(self):
+    with open('saved/readings.pickle', 'rb') as handle:
+       return(pickle.load(handle))
 
+do_load = input("Load existing file? ")
 
-language = input("What language would you like to learn?")
-text = texts(language)
+if do_load == 1:
+    texts = loadTexts()
+else:
+    language = input("What language would you like to learn? ")
+    text = texts(language)
+
 option = 0
 while int(option) >= 0:
     option = input(""" 
         Options
-        1) Download more articles""")
+        1) Download more articles: 
+        2) Save articles to disc
+        3) Show article
+    """)
     if int(option) == 1:
         n = int(input("How many articles: "))
         text.fetch_articles(n)
@@ -170,5 +209,11 @@ while int(option) >= 0:
         text.create_word_frequency()
         text.word_frequency
         text.rank_articles()
+    elif int(option) == 2:
+        text.saveTexts()
+    elif int(option) == 3:
+        text.display()
+        
+        
                    
 
