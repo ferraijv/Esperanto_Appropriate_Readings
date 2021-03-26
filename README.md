@@ -1,6 +1,8 @@
 # Esperanto_Appropriate_Readings
 
-The purpose of this project is to develop a program will find a suitable Esperanto Wikipedia article for a learner. 
+The purpose of this project is to create a program that allows language learners to practice their target language with language samples pulled from Wikipedia. 
+The program will rank the difficulty of each Wikipedia page and ask the reader to score each reading. Using these scores, the program will suggest readings
+that match the user's level.
 
 ## Goal
 
