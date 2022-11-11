@@ -17,3 +17,4 @@ the best way to develop a ranking system for difficulty. For the first attempt, 
 length of the word in the article. I hope to improve this algorithm as I delve deeper into this project.
 
 ## Test
+test
